@@ -1,0 +1,23 @@
+Licencja MIT (tłumaczenie)
+
+To tłumaczenie ma charakter wyłącznie informacyjny. Wiążący jest oryginalny tekst licencji
+w języku angielskim, zamieszczony poniżej.
+
+Copyright (c) 2026 Mac (Maqjack)
+
+Niniejszym udziela się każdej osobie, która otrzyma kopię tego oprogramowania i powiązanych
+z nim plików dokumentacji (dalej „Oprogramowanie”), bezpłatnego zezwolenia na korzystanie
+z Oprogramowania bez ograniczeń, w tym bez ograniczenia prawa do używania, kopiowania,
+modyfikowania, łączenia, publikowania, rozpowszechniania, udzielania sublicencji i/lub
+sprzedaży kopii Oprogramowania oraz do zezwalania na to osobom, którym Oprogramowanie zostało
+dostarczone, pod następującymi warunkami:
+
+Powyższa informacja o prawach autorskich i niniejsze zezwolenie muszą być dołączone do
+wszystkich kopii lub istotnych części Oprogramowania.
+
+OPROGRAMOWANIE JEST DOSTARCZANE W STANIE „TAKIM, JAKIE JEST”, BEZ JAKIEJKOLWIEK GWARANCJI,
+WYRAŹNEJ LUB DOROZUMIANEJ, W TYM MIĘDZY INNYMI GWARANCJI PRZYDATNOŚCI HANDLOWEJ, PRZYDATNOŚCI
+DO OKREŚLONEGO CELU ORAZ NIENARUSZANIA PRAW. AUTORZY ANI POSIADACZE PRAW AUTORSKICH W ŻADNYM
+WYPADKU NIE ODPOWIADAJĄ ZA ŻADNE ROSZCZENIA, SZKODY ANI INNĄ ODPOWIEDZIALNOŚĆ, CZY TO
+WYNIKAJĄCE Z UMOWY, CZYNU NIEDOZWOLONEGO, CZY Z INNEJ PODSTAWY, POWSTAŁE Z OPROGRAMOWANIA LUB
+W ZWIĄZKU Z NIM ALBO Z KORZYSTANIEM Z NIEGO LUB INNYMI CZYNNOŚCIAMI DOTYCZĄCYMI OPROGRAMOWANIA.

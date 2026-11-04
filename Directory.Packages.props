@@ -1,0 +1,35 @@
+<Project>
+
+  <!-- Central package versions (ADR 0001). Every package needs a one-line reason here. -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <!-- Shipped with the app -->
+  <ItemGroup>
+    <!-- ILogger and the [LoggerMessage] source generator for Core and Presentation (MIT). -->
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
+    <!-- ObservableObject, [ObservableProperty] and [RelayCommand] for view models (MIT). -->
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <!-- The single composition root of the app (MIT). -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
+    <!-- LoggerFactory behind AddLogging, which Serilog plugs into (MIT). -->
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.13" />
+    <!-- Rolling log files in %APPDATA%\Somnus\logs, one per day, 7 kept (Apache-2.0). -->
+    <PackageVersion Include="Serilog" Version="4.4.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+  </ItemGroup>
+
+  <!-- Tests only (never shipped) -->
+  <ItemGroup>
+    <!-- xUnit.net v3 on Microsoft Testing Platform v2 (Apache-2.0). -->
+    <PackageVersion Include="xunit.v3" Version="4.0.2" />
+    <!-- Line coverage for the 80% gate on Core and Presentation (MIT). -->
+    <PackageVersion Include="coverlet.MTP" Version="10.1.0" />
+    <!-- FakeTimeProvider: deterministic clock and timers in countdown tests (MIT). -->
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.11.0" />
+  </ItemGroup>
+
+</Project>

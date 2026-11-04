@@ -1,0 +1,35 @@
+<Window x:Class="Somnus.App.Views.MessageDialog"
+        x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:b="clr-namespace:Somnus.App.Behaviors"
+        xmlns:l="clr-namespace:Somnus.App.Localization"
+        Title="{l:Tr App_Name}"
+        b:TextScale.Width="400"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Style="{StaticResource SomnusWindow}">
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal">
+            <Image Width="28" Height="28" Source="{StaticResource LogoImage}" />
+            <TextBlock x:Name="HeadingText" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap" />
+        </StackPanel>
+        <TextBox x:Name="MessageText"
+                 Margin="0,12,0,20"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 Foreground="{StaticResource TextMutedBrush}"
+                 IsReadOnly="True"
+                 Padding="0"
+                 TextWrapping="Wrap" />
+        <Button HorizontalAlignment="Right"
+                MinWidth="88"
+                Click="OnOk"
+                Content="{l:Tr Error_Ok}"
+                IsCancel="True"
+                IsDefault="True"
+                Style="{StaticResource PrimaryButton}" />
+    </StackPanel>
+</Window>

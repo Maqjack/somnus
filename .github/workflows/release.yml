@@ -1,0 +1,133 @@
+name: Release
+
+# Builds a release from a clean checkout of a version tag (SWPA stage 5). Every release starts
+# as a draft: it becomes visible only when Mac publishes it (SWPA stage 7). Tags with a
+# pre-release suffix (v0.9.0-rc.1) are also marked as pre-releases.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: "1"
+
+jobs:
+  build:
+    name: Build and verify the release
+    runs-on: windows-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The tag reaches the script as an environment variable, never as script text.
+      - name: Read the version from the tag
+        id: version
+        shell: pwsh
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          $version = $env:TAG.TrimStart('v')
+          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "Tag $env:TAG is not vMAJOR.MINOR.PATCH[-suffix]." }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "prerelease=$($version.Contains('-').ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
+      - name: Set up .NET SDK from global.json
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
+
+      - name: Restore (locked mode)
+        run: dotnet restore Somnus.sln --locked-mode
+
+      - name: Check formatting and code style
+        run: dotnet format Somnus.sln --verify-no-changes --no-restore --exclude-diagnostics IDE0005
+
+      - name: Build (Release, warnings as errors)
+        run: dotnet build Somnus.sln --configuration Release --no-restore "-p:Version=${{ steps.version.outputs.version }}"
+
+      - name: Test with coverage
+        run: dotnet test --solution Somnus.sln --configuration Release --no-build --results-directory artifacts/test-results --coverlet
+
+      - name: Coverage gate
+        shell: pwsh
+        run: ./scripts/check-coverage.ps1 -ResultsDirectory artifacts/test-results
+
+      - name: Known vulnerabilities in dependencies
+        shell: pwsh
+        run: ./scripts/check-vulnerable.ps1
+
+      - name: Project rules R-01, R-02 and R-07
+        shell: pwsh
+        run: ./scripts/check-rules.ps1
+
+      # The build log names the Inno Setup version that compiled the installer.
+      - name: Install Inno Setup 6 if the runner lacks it
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --version 6.7.1 --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw "Installing Inno Setup failed." }
+          }
+
+      - name: Build installers, portable zips, notices and checksums (with self-test and manifest)
+        run: python scripts/build.py --version "${{ steps.version.outputs.version }}"
+
+      - name: Install, upgrade and uninstall on the runner (ADR 0010)
+        run: python scripts/test_installer.py --version "${{ steps.version.outputs.version }}"
+
+      - name: Write release notes
+        shell: pwsh
+        run: ./scripts/release-notes.ps1 -Version "${{ steps.version.outputs.version }}" -ChecksumsFile artifacts/release/SHA256SUMS.txt -OutputFile artifacts/release-notes.md
+
+      - name: Upload release files
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release
+          path: |
+            artifacts/release/
+            artifacts/release-notes.md
+            artifacts/build-manifest-win-x64.txt
+            artifacts/self-test-*.json
+          retention-days: 14
+          if-no-files-found: error
+
+  publish:
+    name: Create the GitHub release
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download release files
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release
+          path: release
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build.outputs.version }}
+          PRERELEASE: ${{ needs.build.outputs.prerelease }}
+        run: |
+          flags=(--draft)
+          if [ "$PRERELEASE" = "true" ]; then flags+=(--prerelease); fi
+          gh release create "${GITHUB_REF_NAME}" release/release/* \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "Somnus ${VERSION}" \
+            --notes-file release/release-notes.md \
+            --verify-tag \
+            "${flags[@]}"

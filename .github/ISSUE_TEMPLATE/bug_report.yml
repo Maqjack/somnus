@@ -1,0 +1,52 @@
+name: Bug report
+description: Something in Somnus does not work as described.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please do not paste personal data; Somnus logs live in `%APPDATA%\Somnus\logs`.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Choose "Shut down" in 10 minutes
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Somnus version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2 (x64)
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Relevant log lines
+      description: From `%APPDATA%\Somnus\logs`. Check that they contain nothing private.
+      render: text
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when…
+      description: Acceptance criterion for the fix (SWPA 3.12).
+      placeholder: Done when a 10-minute shutdown countdown runs on Windows 10 22H2 without ...
+    validations:
+      required: true

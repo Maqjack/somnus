@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <!-- Same restore graph as the win-x64 publish of the app, so publishing never rewrites the lock file. -->
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <Description>Windows adapters of Somnus: power actions, power capabilities, keep-awake, settings file store and single-instance signalling.</Description>
+    <!-- The LibraryImport source generator emits unsafe marshalling code. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Somnus.Core\Somnus.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Somnus.Windows.Tests" />
+  </ItemGroup>
+
+</Project>

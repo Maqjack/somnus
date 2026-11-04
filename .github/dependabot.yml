@@ -1,0 +1,39 @@
+# Weekly dependency updates (SWPA 3.1). Dependabot alerts are enabled in the repo settings.
+# If a NuGet update PR fails `restore --locked-mode`, refresh the lock files with
+# `dotnet restore --force-evaluate` on that branch and push.
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels: [chore]
+    groups:
+      microsoft-extensions:
+        patterns: ["Microsoft.Extensions.*"]
+      serilog:
+        patterns: ["Serilog*"]
+      tests:
+        patterns: ["xunit*", "coverlet*", "Microsoft.Testing.*"]
+
+  - package-ecosystem: dotnet-sdk
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(deps)"
+    labels: [chore]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "ci(deps)"
+    labels: [ci]

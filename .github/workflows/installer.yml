@@ -1,0 +1,55 @@
+name: Installer
+
+# Installs, upgrades and uninstalls Somnus on the throw-away runner, including the download of the
+# .NET Desktop Runtime (ADR 0010). The release workflow runs the same test on every release.
+on:
+  pull_request:
+    paths:
+      - "installer/**"
+      - "scripts/build.py"
+      - "scripts/test_installer.py"
+      - ".github/workflows/installer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: "1"
+
+jobs:
+  installer:
+    name: Install, upgrade and uninstall
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET SDK from global.json
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
+
+      - name: Restore (locked mode)
+        run: dotnet restore Somnus.sln --locked-mode
+
+      - name: Install Inno Setup 6 if the runner lacks it
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --version 6.7.1 --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw "Installing Inno Setup failed." }
+          }
+
+      - name: Build
+        run: python scripts/build.py --version 0.0.0-test
+
+      - name: Test the installers
+        run: python scripts/test_installer.py --version 0.0.0-test

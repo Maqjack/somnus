@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Polish texts of Somnus (rule R-04). Every key must match Strings.resx; ResourceTests check it. -->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App_Name" xml:space="preserve">
+    <value>Somnus</value>
+  </data>
+  <data name="App_Signature" xml:space="preserve">
+    <value>by Maqjack</value>
+    <comment>The author's nick, the same in every language (#69).</comment>
+  </data>
+  <data name="App_NameDryRun" xml:space="preserve">
+    <value>Somnus (tryb próbny)</value>
+  </data>
+  <data name="Main_SettingsButton" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="Main_ModeGroup" xml:space="preserve">
+    <value>Kiedy</value>
+  </data>
+  <data name="Main_ModeIn" xml:space="preserve">
+    <value>Odliczanie</value>
+  </data>
+  <data name="Main_ModeAt" xml:space="preserve">
+    <value>O której</value>
+  </data>
+  <data name="Main_Amount" xml:space="preserve">
+    <value>Liczba</value>
+  </data>
+  <data name="Main_Unit" xml:space="preserve">
+    <value>Jednostka</value>
+  </data>
+  <data name="Unit_Seconds" xml:space="preserve">
+    <value>sek.</value>
+    <comment>Abbreviated so it reads right after any number (1 sek., 2 sek., 30 sek.).</comment>
+  </data>
+  <data name="Unit_Minutes" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="Unit_Hours" xml:space="preserve">
+    <value>godz.</value>
+  </data>
+  <data name="Main_Hour" xml:space="preserve">
+    <value>Godzina</value>
+  </data>
+  <data name="Main_Minute" xml:space="preserve">
+    <value>Minuta</value>
+  </data>
+  <data name="Main_AtPreviewSleep" xml:space="preserve">
+    <value>Komputer zaśnie o {1} ({0})</value>
+  </data>
+  <data name="Main_AtPreviewHibernate" xml:space="preserve">
+    <value>Komputer przejdzie w hibernację o {1} ({0})</value>
+  </data>
+  <data name="Main_AtPreviewShutdown" xml:space="preserve">
+    <value>Komputer wyłączy się o {1} ({0})</value>
+  </data>
+  <data name="Main_ActionGroup" xml:space="preserve">
+    <value>Akcja</value>
+  </data>
+  <data name="Action_Sleep" xml:space="preserve">
+    <value>Uśpij</value>
+  </data>
+  <data name="Action_Hibernate" xml:space="preserve">
+    <value>Hibernuj</value>
+  </data>
+  <data name="Action_Shutdown" xml:space="preserve">
+    <value>Wyłącz</value>
+  </data>
+  <data name="Main_SleepUnavailable" xml:space="preserve">
+    <value>Ten komputer nie obsługuje uśpienia.</value>
+  </data>
+  <data name="Main_SleepUnavailableModernStandby" xml:space="preserve">
+    <value>Ten komputer używa trybu Modern Standby, którego aplikacje nie mogą włączyć. Wybierz hibernację lub wyłączenie.</value>
+  </data>
+  <data name="Main_HibernateUnavailable" xml:space="preserve">
+    <value>Hibernacja jest wyłączona w Windowsie. Aby ją włączyć, uruchom „powercfg /hibernate on” w terminalu otwartym jako administrator.</value>
+  </data>
+  <data name="Main_ForceCloseApps" xml:space="preserve">
+    <value>Wymuś zamknięcie programów</value>
+  </data>
+  <data name="Main_ForceCloseAppsWarning" xml:space="preserve">
+    <value>Programy zostaną zamknięte bez pytania. Niezapisana praca przepadnie.</value>
+  </data>
+  <data name="Main_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Main_Cancel" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Main_TimeLeft" xml:space="preserve">
+    <value>Pozostały czas</value>
+  </data>
+  <data name="Main_PendingChanges" xml:space="preserve">
+    <value>Zmieniono ustawienia.</value>
+  </data>
+  <data name="Main_SaveChanges" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="Input_Empty" xml:space="preserve">
+    <value>Wpisz liczbę.</value>
+  </data>
+  <data name="Input_NotANumber" xml:space="preserve">
+    <value>Używaj tylko cyfr.</value>
+  </data>
+  <data name="Input_TooShort" xml:space="preserve">
+    <value>Minimum to 10 sekund.</value>
+  </data>
+  <data name="Input_TooLong" xml:space="preserve">
+    <value>Maksimum to 99 godzin.</value>
+  </data>
+  <data name="Input_InvalidHour" xml:space="preserve">
+    <value>Wpisz godzinę od 0 do 23.</value>
+  </data>
+  <data name="Input_InvalidMinute" xml:space="preserve">
+    <value>Wpisz minutę od 0 do 59.</value>
+  </data>
+  <data name="Target_Sleep" xml:space="preserve">
+    <value>Uśpienie {0} o {1}</value>
+  </data>
+  <data name="Target_Hibernate" xml:space="preserve">
+    <value>Hibernacja {0} o {1}</value>
+  </data>
+  <data name="Target_Shutdown" xml:space="preserve">
+    <value>Wyłączenie {0} o {1}</value>
+  </data>
+  <data name="Format_Date" xml:space="preserve">
+    <value>ddd, d MMM</value>
+  </data>
+  <data name="Status_DeadlineMissed" xml:space="preserve">
+    <value>Odliczanie anulowano: komputer wybudził się albo zmienił się zegar na mniej niż minutę przed zaplanowanym momentem lub po nim.</value>
+  </data>
+  <data name="Status_FailedSleep" xml:space="preserve">
+    <value>Windows nie pozwolił uśpić komputera. Szczegóły są w logu.</value>
+  </data>
+  <data name="Status_FailedHibernate" xml:space="preserve">
+    <value>Windows nie pozwolił zahibernować komputera. Szczegóły są w logu.</value>
+  </data>
+  <data name="Status_FailedShutdown" xml:space="preserve">
+    <value>Windows nie pozwolił wyłączyć komputera. Szczegóły są w logu.</value>
+  </data>
+  <data name="Confirm_CancelTitle" xml:space="preserve">
+    <value>Zatrzymać odliczanie?</value>
+  </data>
+  <data name="Confirm_CancelMessage" xml:space="preserve">
+    <value>{0} nie nastąpi.</value>
+  </data>
+  <data name="Confirm_CancelYes" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Confirm_CancelNo" xml:space="preserve">
+    <value>Odliczaj dalej</value>
+  </data>
+  <data name="Confirm_CancelScheduleTitle" xml:space="preserve">
+    <value>Zatrzymać harmonogram?</value>
+  </data>
+  <data name="Confirm_CancelScheduleMessage" xml:space="preserve">
+    <value>{0} nie nastąpi, a odliczanie przestanie się powtarzać.</value>
+  </data>
+  <data name="Confirm_CancelScheduleYes" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Confirm_CancelScheduleNo" xml:space="preserve">
+    <value>Zostaw harmonogram</value>
+  </data>
+  <data name="Confirm_ExitScheduleMessage" xml:space="preserve">
+    <value>Odliczanie zostanie zatrzymane i przestanie się powtarzać.</value>
+  </data>
+  <data name="Confirm_RestartTitle" xml:space="preserve">
+    <value>Uruchomić odliczanie od nowa?</value>
+  </data>
+  <data name="Confirm_RestartMessage" xml:space="preserve">
+    <value>Trwające odliczanie zostanie zastąpione nowym, z nowymi ustawieniami.</value>
+  </data>
+  <data name="Confirm_RestartYes" xml:space="preserve">
+    <value>Od nowa</value>
+  </data>
+  <data name="Confirm_RestartNo" xml:space="preserve">
+    <value>Zostaw obecne</value>
+  </data>
+  <data name="Confirm_ExitTitle" xml:space="preserve">
+    <value>Zamknąć Somnus?</value>
+  </data>
+  <data name="Confirm_ExitMessage" xml:space="preserve">
+    <value>Odliczanie zostanie zatrzymane.</value>
+  </data>
+  <data name="Confirm_ExitYes" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="Confirm_ExitNo" xml:space="preserve">
+    <value>Działaj dalej</value>
+  </data>
+  <data name="Tray_EditCountdown" xml:space="preserve">
+    <value>Edytuj odliczanie</value>
+  </data>
+  <data name="Tray_Open" xml:space="preserve">
+    <value>Otwórz Somnus</value>
+  </data>
+  <data name="Tray_Cancel" xml:space="preserve">
+    <value>Zatrzymaj odliczanie</value>
+  </data>
+  <data name="Tray_Exit" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="Tray_ToolTipSleep" xml:space="preserve">
+    <value>Somnus: uśpienie za {0}</value>
+  </data>
+  <data name="Tray_ToolTipHibernate" xml:space="preserve">
+    <value>Somnus: hibernacja za {0}</value>
+  </data>
+  <data name="Tray_ToolTipShutdown" xml:space="preserve">
+    <value>Somnus: wyłączenie za {0}</value>
+  </data>
+  <data name="Tray_HiddenTitle" xml:space="preserve">
+    <value>Somnus odlicza dalej</value>
+  </data>
+  <data name="Tray_HiddenMessage" xml:space="preserve">
+    <value>{0}. Kliknij półksiężyc w zasobniku, żeby zmienić lub zatrzymać odliczanie.</value>
+  </data>
+  <data name="Warning_HeadingSleep" xml:space="preserve">
+    <value>Komputer zostanie uśpiony za</value>
+  </data>
+  <data name="Warning_HeadingHibernate" xml:space="preserve">
+    <value>Komputer zostanie zahibernowany za</value>
+  </data>
+  <data name="Warning_HeadingShutdown" xml:space="preserve">
+    <value>Komputer zostanie wyłączony za</value>
+  </data>
+  <data name="Warning_Minimize" xml:space="preserve">
+    <value>Minimalizuj. Odliczanie trwa dalej.</value>
+  </data>
+  <data name="Warning_DoItNow" xml:space="preserve">
+    <value>Wykonaj teraz</value>
+  </data>
+  <data name="Warning_Cancel" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="DryRun_Title" xml:space="preserve">
+    <value>Tryb próbny</value>
+  </data>
+  <data name="DryRun_Message" xml:space="preserve">
+    <value>Zasymulowano akcję „{0}”. Stan zasilania komputera się nie zmienił.</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="Settings_Warning" xml:space="preserve">
+    <value>Ostrzegaj 60 sekund przed akcją</value>
+  </data>
+  <data name="Settings_RememberLast" xml:space="preserve">
+    <value>Zapamiętuj ostatnie odliczanie</value>
+  </data>
+  <data name="Settings_Save" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="Settings_Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Settings_Close" xml:space="preserve">
+    <value>Zamknij bez zapisywania</value>
+  </data>
+  <data name="Settings_Sound" xml:space="preserve">
+    <value>Dźwięk w ostatnich 20 sekundach</value>
+  </data>
+  <data name="Settings_SoundLullaby" xml:space="preserve">
+    <value>Kołysanka (domyślna)</value>
+  </data>
+  <data name="Settings_SoundNone" xml:space="preserve">
+    <value>Bez dźwięku</value>
+  </data>
+  <data name="Settings_SoundOwnFile" xml:space="preserve">
+    <value>Plik dźwiękowy</value>
+  </data>
+  <data name="Settings_SoundFilePath" xml:space="preserve">
+    <value>Ścieżka pliku dźwiękowego</value>
+  </data>
+  <data name="Settings_Browse" xml:space="preserve">
+    <value>Przeglądaj…</value>
+  </data>
+  <data name="Settings_SoundFileHint" xml:space="preserve">
+    <value>Somnus gra pierwsze 20 sekund pliku: MP3, WAV, WMA, M4A, AAC lub FLAC.</value>
+  </data>
+  <data name="Settings_SoundFileInvalid" xml:space="preserve">
+    <value>Wybierz plik dźwiękowy z tego komputera: MP3, WAV, WMA, M4A, AAC lub FLAC. Nic nie zostało zapisane.</value>
+  </data>
+  <data name="Settings_SoundFileMissing" xml:space="preserve">
+    <value>Tego pliku już nie ma, więc Somnus gra kołysankę. Wybierz inny plik.</value>
+  </data>
+  <data name="Settings_SoundFileBroken" xml:space="preserve">
+    <value>Windows nie odtworzył tego pliku ostatnim razem, więc Somnus zagrał kołysankę. Wybierz inny plik.</value>
+  </data>
+  <data name="Settings_SoundFileDialog" xml:space="preserve">
+    <value>Wybierz dźwięk</value>
+  </data>
+  <data name="Settings_SoundFileFilter" xml:space="preserve">
+    <value>Pliki dźwiękowe</value>
+  </data>
+  <data name="Settings_StartWithWindows" xml:space="preserve">
+    <value>Uruchamiaj z Windowsem</value>
+  </data>
+  <data name="Settings_StartWithWindowsHint" xml:space="preserve">
+    <value>Somnus czeka w zasobniku, więc harmonogram działa dalej po ponownym uruchomieniu komputera.</value>
+  </data>
+  <data name="Settings_AutostartFailed" xml:space="preserve">
+    <value>Windows nie pozwolił zmienić uruchamiania z Windowsem. Pozostałe ustawienia są zapisane. Naciśnij Zapisz, żeby spróbować ponownie; szczegóły są w logu.</value>
+  </data>
+  <data name="Settings_SaveFailed" xml:space="preserve">
+    <value>Nie udało się zapisać ustawień, więc obowiązują tylko do zamknięcia aplikacji. Szczegóły są w logu.</value>
+  </data>
+  <data name="Error_Heading" xml:space="preserve">
+    <value>Coś poszło nie tak</value>
+  </data>
+  <data name="Error_Recoverable" xml:space="preserve">
+    <value>Somnus zapisał szczegóły w logu i działa dalej. Folder logów: {0}</value>
+  </data>
+  <data name="Error_Fatal" xml:space="preserve">
+    <value>Somnus musi się zamknąć. Szczegóły są w logu. Folder logów: {0}</value>
+  </data>
+  <data name="Error_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Main_EveryDay" xml:space="preserve">
+    <value>Codziennie</value>
+  </data>
+  <data name="Main_RepeatDays" xml:space="preserve">
+    <value>Powtarzaj w te dni</value>
+  </data>
+  <data name="Main_RepeatsEveryDay" xml:space="preserve">
+    <value>Powtarza się codziennie</value>
+  </data>
+  <data name="Main_RepeatsOn" xml:space="preserve">
+    <value>Powtarza się: {0}</value>
+  </data>
+  <data name="Day_ShortMonday" xml:space="preserve">
+    <value>Pn</value>
+  </data>
+  <data name="Day_ShortTuesday" xml:space="preserve">
+    <value>Wt</value>
+  </data>
+  <data name="Day_ShortWednesday" xml:space="preserve">
+    <value>Śr</value>
+  </data>
+  <data name="Day_ShortThursday" xml:space="preserve">
+    <value>Cz</value>
+  </data>
+  <data name="Day_ShortFriday" xml:space="preserve">
+    <value>Pt</value>
+  </data>
+  <data name="Day_ShortSaturday" xml:space="preserve">
+    <value>So</value>
+  </data>
+  <data name="Day_ShortSunday" xml:space="preserve">
+    <value>Nd</value>
+  </data>
+  <data name="Day_Monday" xml:space="preserve">
+    <value>Poniedziałek</value>
+  </data>
+  <data name="Day_Tuesday" xml:space="preserve">
+    <value>Wtorek</value>
+  </data>
+  <data name="Day_Wednesday" xml:space="preserve">
+    <value>Środa</value>
+  </data>
+  <data name="Day_Thursday" xml:space="preserve">
+    <value>Czwartek</value>
+  </data>
+  <data name="Day_Friday" xml:space="preserve">
+    <value>Piątek</value>
+  </data>
+  <data name="Day_Saturday" xml:space="preserve">
+    <value>Sobota</value>
+  </data>
+  <data name="Day_Sunday" xml:space="preserve">
+    <value>Niedziela</value>
+  </data>
+</root>

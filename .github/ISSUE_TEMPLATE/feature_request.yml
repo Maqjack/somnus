@@ -1,0 +1,37 @@
+name: Feature or task
+description: A new capability, an improvement or a piece of planned work.
+labels: [feat]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Somnus stays small on purpose: describe the problem first, then the idea.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or goal
+      description: What should become possible, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: How it could work. Mention alternatives you considered.
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P1 (urgent)
+        - P2 (important)
+        - P3 (some day)
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when…
+      description: Acceptance criterion (SWPA 3.12).
+    validations:
+      required: true

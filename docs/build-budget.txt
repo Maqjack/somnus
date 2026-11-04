@@ -1,0 +1,5 @@
+Size and file count of the portable folder, as scripts/build.py measures it (SWPA 3.14). Growth of
+more than 10% over this needs a reason in the pull request. An installed copy adds the uninstaller;
+scripts/test_installer.py measures it and fails above 10 MB.
+
+Budget: 2.3 MB, 22 files (1.1.0, framework-dependent, ADR 0010).

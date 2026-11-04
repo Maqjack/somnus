@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- Only for the tray icon (ADR 0006). -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Somnus</AssemblyName>
+    <RootNamespace>Somnus.App</RootNamespace>
+    <ApplicationIcon>..\..\assets\Somnus.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <Description>Somnus puts a Windows PC to sleep, hibernates it or shuts it down after a countdown or at a chosen time.</Description>
+    <!-- WFO0003 asks WinForms apps to set DPI awareness in code; this is a WPF app, where app.manifest is the documented place. -->
+    <NoWarn>$(NoWarn);WFO0003</NoWarn>
+  </PropertyGroup>
+
+  <!-- What the published folder holds (SWPA 3.14, ADR 0010). -->
+  <PropertyGroup>
+    <!-- The .NET Desktop Runtime is shared with other apps instead of bundled; the installer adds it when it is missing. -->
+    <SelfContained>false</SelfContained>
+    <!-- API documentation is for developers, not for running the app. -->
+    <PublishDocumentationFiles>false</PublishDocumentationFiles>
+    <!-- Debug symbols are for developers; stack traces in the log keep the method names without them. -->
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+
+  <!-- The same goes for the debug symbols of the referenced projects, which take another route into the folder. -->
+  <Target Name="RemoveReferenceSymbolsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Extension)' == '.pdb'" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+    <PackageReference Include="Serilog.Sinks.File" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Somnus.Core\Somnus.Core.csproj" />
+    <ProjectReference Include="..\Somnus.Presentation\Somnus.Presentation.csproj" />
+    <ProjectReference Include="..\Somnus.Windows\Somnus.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\Somnus.ico" Link="Assets\Somnus.ico" />
+    <!-- The lullaby (#71), made from the recording by scripts/make-lullaby.ps1. -->
+    <EmbeddedResource Include="..\..\assets\lullaby.wav" Link="Assets\lullaby.wav" LogicalName="Somnus.App.Assets.lullaby.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Somnus.App.Tests" />
+  </ItemGroup>
+
+  <!-- WinForms serves only the tray icon; its namespaces stay out of the global usings so they never clash with WPF. -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- Same restore graph as the win-x64 publish of the app, so publishing never rewrites the lock file. -->
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <Description>Platform-independent logic of Somnus: time modes, validation, the countdown state machine, the settings model and the ports implemented by adapters.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Somnus.Core.Tests" />
+    <InternalsVisibleTo Include="Somnus.Presentation.Tests" />
+    <InternalsVisibleTo Include="Somnus.App.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,71 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ll]og/
+[Ll]ogs/
+
+# Local publish and release output (SWPA: never commit build artifacts)
+artifacts/
+build/
+dist/
+builds/
+installer/Output/
+
+# Build backups, audit screenshots and local agent memory (SWPA 3.14, 3.15)
+_build_backups/
+.audit/
+.claude/agent-memory-local/
+
+# Test results and coverage
+[Tt]est[Rr]esult*/
+*.trx
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!**/packages/build/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.rsuser
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.DotSettings.user
+_ReSharper*/
+
+# MSBuild binary logs and diagnostics
+*.binlog
+msbuild.log
+*.dmp
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Secrets (the app has none; keep it that way)
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.snk

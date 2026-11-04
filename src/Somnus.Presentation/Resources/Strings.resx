@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Every user-facing string of Somnus (rule R-04). English is the default; each key needs a twin in Strings.pl.resx. -->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App_Name" xml:space="preserve">
+    <value>Somnus</value>
+  </data>
+  <data name="App_Signature" xml:space="preserve">
+    <value>by Maqjack</value>
+    <comment>The author's nick, the same in every language (#69).</comment>
+  </data>
+  <data name="App_NameDryRun" xml:space="preserve">
+    <value>Somnus (dry run)</value>
+    <comment>Window title when power actions are only simulated.</comment>
+  </data>
+  <data name="Main_SettingsButton" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Main_ModeGroup" xml:space="preserve">
+    <value>When</value>
+    <comment>Accessible name of the In/At switch.</comment>
+  </data>
+  <data name="Main_ModeIn" xml:space="preserve">
+    <value>Countdown</value>
+    <comment>The mode that counts down a duration (issue #58).</comment>
+  </data>
+  <data name="Main_ModeAt" xml:space="preserve">
+    <value>At a time</value>
+    <comment>The mode that acts at a clock time (issue #58).</comment>
+  </data>
+  <data name="Main_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Main_Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Unit_Seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="Unit_Minutes" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="Unit_Hours" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="Main_Hour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="Main_Minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="Main_AtPreviewSleep" xml:space="preserve">
+    <value>The PC will sleep at {1} ({0})</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Main_AtPreviewHibernate" xml:space="preserve">
+    <value>The PC will hibernate at {1} ({0})</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Main_AtPreviewShutdown" xml:space="preserve">
+    <value>The PC will shut down at {1} ({0})</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Main_ActionGroup" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Action_Sleep" xml:space="preserve">
+    <value>Sleep</value>
+  </data>
+  <data name="Action_Hibernate" xml:space="preserve">
+    <value>Hibernate</value>
+  </data>
+  <data name="Action_Shutdown" xml:space="preserve">
+    <value>Shut down</value>
+  </data>
+  <data name="Main_SleepUnavailable" xml:space="preserve">
+    <value>This PC does not support sleep.</value>
+  </data>
+  <data name="Main_SleepUnavailableModernStandby" xml:space="preserve">
+    <value>This PC uses Modern Standby, which apps cannot start. Choose Hibernate or Shut down instead.</value>
+  </data>
+  <data name="Main_HibernateUnavailable" xml:space="preserve">
+    <value>Hibernation is turned off in Windows. To turn it on, run "powercfg /hibernate on" in a terminal opened as administrator.</value>
+  </data>
+  <data name="Main_ForceCloseApps" xml:space="preserve">
+    <value>Force close apps</value>
+  </data>
+  <data name="Main_ForceCloseAppsWarning" xml:space="preserve">
+    <value>Apps will be closed without asking. Unsaved work will be lost.</value>
+  </data>
+  <data name="Main_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Main_Cancel" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Main_TimeLeft" xml:space="preserve">
+    <value>Time left</value>
+    <comment>Accessible name of the large countdown.</comment>
+  </data>
+  <data name="Main_PendingChanges" xml:space="preserve">
+    <value>You changed the settings.</value>
+  </data>
+  <data name="Main_SaveChanges" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Input_Empty" xml:space="preserve">
+    <value>Enter a number.</value>
+  </data>
+  <data name="Input_NotANumber" xml:space="preserve">
+    <value>Use digits only.</value>
+  </data>
+  <data name="Input_TooShort" xml:space="preserve">
+    <value>The minimum is 10 seconds.</value>
+  </data>
+  <data name="Input_TooLong" xml:space="preserve">
+    <value>The maximum is 99 hours.</value>
+  </data>
+  <data name="Input_InvalidHour" xml:space="preserve">
+    <value>Enter an hour from 0 to 23.</value>
+  </data>
+  <data name="Input_InvalidMinute" xml:space="preserve">
+    <value>Enter a minute from 0 to 59.</value>
+  </data>
+  <data name="Target_Sleep" xml:space="preserve">
+    <value>Sleep on {0} at {1}</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Target_Hibernate" xml:space="preserve">
+    <value>Hibernate on {0} at {1}</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Target_Shutdown" xml:space="preserve">
+    <value>Shut down on {0} at {1}</value>
+    <comment>{0} = date (Format_Date), {1} = time (HH:mm).</comment>
+  </data>
+  <data name="Format_Date" xml:space="preserve">
+    <value>ddd, d MMM</value>
+    <comment>.NET custom date format for the target date, for example "Thu, 22 Oct".</comment>
+  </data>
+  <data name="Status_DeadlineMissed" xml:space="preserve">
+    <value>The countdown was cancelled: the PC woke up, or the clock changed, less than a minute before the scheduled time or after it.</value>
+  </data>
+  <data name="Status_FailedSleep" xml:space="preserve">
+    <value>Windows did not let Somnus put the PC to sleep. Details are in the log.</value>
+  </data>
+  <data name="Status_FailedHibernate" xml:space="preserve">
+    <value>Windows did not let Somnus hibernate the PC. Details are in the log.</value>
+  </data>
+  <data name="Status_FailedShutdown" xml:space="preserve">
+    <value>Windows did not let Somnus shut down the PC. Details are in the log.</value>
+  </data>
+  <data name="Confirm_CancelTitle" xml:space="preserve">
+    <value>Stop the countdown?</value>
+  </data>
+  <data name="Confirm_CancelMessage" xml:space="preserve">
+    <value>{0} will not happen.</value>
+    <comment>{0} = target text, for example "Sleep on Thu, 22 Oct at 23:30".</comment>
+  </data>
+  <data name="Confirm_CancelYes" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Confirm_CancelNo" xml:space="preserve">
+    <value>Keep counting</value>
+  </data>
+  <data name="Confirm_CancelScheduleTitle" xml:space="preserve">
+    <value>Stop the schedule?</value>
+  </data>
+  <data name="Confirm_CancelScheduleMessage" xml:space="preserve">
+    <value>{0} will not happen, and the countdown will stop repeating.</value>
+    <comment>{0} is the action and its date.</comment>
+  </data>
+  <data name="Confirm_CancelScheduleYes" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Confirm_CancelScheduleNo" xml:space="preserve">
+    <value>Keep schedule</value>
+  </data>
+  <data name="Confirm_ExitScheduleMessage" xml:space="preserve">
+    <value>The countdown will stop and no longer repeat.</value>
+  </data>
+  <data name="Confirm_RestartTitle" xml:space="preserve">
+    <value>Restart the countdown?</value>
+  </data>
+  <data name="Confirm_RestartMessage" xml:space="preserve">
+    <value>The running countdown will be replaced by one with the new settings.</value>
+  </data>
+  <data name="Confirm_RestartYes" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Confirm_RestartNo" xml:space="preserve">
+    <value>Keep current</value>
+  </data>
+  <data name="Confirm_ExitTitle" xml:space="preserve">
+    <value>Exit Somnus?</value>
+  </data>
+  <data name="Confirm_ExitMessage" xml:space="preserve">
+    <value>The countdown will stop.</value>
+  </data>
+  <data name="Confirm_ExitYes" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Confirm_ExitNo" xml:space="preserve">
+    <value>Keep running</value>
+  </data>
+  <data name="Tray_EditCountdown" xml:space="preserve">
+    <value>Edit countdown</value>
+  </data>
+  <data name="Tray_Open" xml:space="preserve">
+    <value>Open Somnus</value>
+  </data>
+  <data name="Tray_Cancel" xml:space="preserve">
+    <value>Stop countdown</value>
+  </data>
+  <data name="Tray_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Tray_ToolTipSleep" xml:space="preserve">
+    <value>Somnus: sleep in {0}</value>
+    <comment>{0} = remaining time (HH:MM:SS).</comment>
+  </data>
+  <data name="Tray_ToolTipHibernate" xml:space="preserve">
+    <value>Somnus: hibernate in {0}</value>
+    <comment>{0} = remaining time (HH:MM:SS).</comment>
+  </data>
+  <data name="Tray_ToolTipShutdown" xml:space="preserve">
+    <value>Somnus: shut down in {0}</value>
+    <comment>{0} = remaining time (HH:MM:SS).</comment>
+  </data>
+  <data name="Tray_HiddenTitle" xml:space="preserve">
+    <value>Somnus keeps counting</value>
+  </data>
+  <data name="Tray_HiddenMessage" xml:space="preserve">
+    <value>{0}. Click the moon in the tray to change or stop it.</value>
+    <comment>{0} = target text, for example "Sleep on Thu, 22 Oct at 23:30".</comment>
+  </data>
+  <data name="Warning_HeadingSleep" xml:space="preserve">
+    <value>The PC will go to sleep in</value>
+  </data>
+  <data name="Warning_HeadingHibernate" xml:space="preserve">
+    <value>The PC will hibernate in</value>
+  </data>
+  <data name="Warning_HeadingShutdown" xml:space="preserve">
+    <value>The PC will shut down in</value>
+  </data>
+  <data name="Warning_Minimize" xml:space="preserve">
+    <value>Minimize. The countdown goes on.</value>
+  </data>
+  <data name="Warning_DoItNow" xml:space="preserve">
+    <value>Do it now</value>
+  </data>
+  <data name="Warning_Cancel" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="DryRun_Title" xml:space="preserve">
+    <value>Dry run</value>
+  </data>
+  <data name="DryRun_Message" xml:space="preserve">
+    <value>{0} simulated. The power state of the PC did not change.</value>
+    <comment>{0} = action name (Action_Sleep, Action_Hibernate or Action_Shutdown).</comment>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_Warning" xml:space="preserve">
+    <value>Warn me 60 seconds before the action</value>
+  </data>
+  <data name="Settings_RememberLast" xml:space="preserve">
+    <value>Remember my last countdown</value>
+  </data>
+  <data name="Settings_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Settings_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Settings_Close" xml:space="preserve">
+    <value>Close without saving</value>
+  </data>
+  <data name="Settings_Sound" xml:space="preserve">
+    <value>Sound in the last 20 seconds</value>
+  </data>
+  <data name="Settings_SoundLullaby" xml:space="preserve">
+    <value>Lullaby (default)</value>
+  </data>
+  <data name="Settings_SoundNone" xml:space="preserve">
+    <value>No sound</value>
+  </data>
+  <data name="Settings_SoundOwnFile" xml:space="preserve">
+    <value>Sound file</value>
+  </data>
+  <data name="Settings_SoundFilePath" xml:space="preserve">
+    <value>Path of the sound file</value>
+  </data>
+  <data name="Settings_Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Settings_SoundFileHint" xml:space="preserve">
+    <value>Somnus plays the first 20 seconds of the file: MP3, WAV, WMA, M4A, AAC or FLAC.</value>
+  </data>
+  <data name="Settings_SoundFileInvalid" xml:space="preserve">
+    <value>Choose a sound file on this PC: MP3, WAV, WMA, M4A, AAC or FLAC. Nothing was saved.</value>
+  </data>
+  <data name="Settings_SoundFileMissing" xml:space="preserve">
+    <value>This file is gone, so Somnus plays the lullaby instead. Choose another file.</value>
+  </data>
+  <data name="Settings_SoundFileBroken" xml:space="preserve">
+    <value>Windows could not play this file last time, so Somnus played the lullaby. Choose another file.</value>
+  </data>
+  <data name="Settings_SoundFileDialog" xml:space="preserve">
+    <value>Choose a sound</value>
+  </data>
+  <data name="Settings_SoundFileFilter" xml:space="preserve">
+    <value>Sound files</value>
+  </data>
+  <data name="Settings_StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="Settings_StartWithWindowsHint" xml:space="preserve">
+    <value>Somnus waits in the tray, so a schedule goes on after the PC restarts.</value>
+  </data>
+  <data name="Settings_AutostartFailed" xml:space="preserve">
+    <value>Windows did not let Somnus change starting with Windows. The other settings are saved. Press Save to try again; details are in the log.</value>
+  </data>
+  <data name="Settings_SaveFailed" xml:space="preserve">
+    <value>The settings could not be saved, so they apply only until Somnus closes. Details are in the log.</value>
+  </data>
+  <data name="Error_Heading" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="Error_Recoverable" xml:space="preserve">
+    <value>Somnus saved the details in the log and keeps running. Log folder: {0}</value>
+    <comment>{0} = folder of the log files.</comment>
+  </data>
+  <data name="Error_Fatal" xml:space="preserve">
+    <value>Somnus has to close. The details are in the log. Log folder: {0}</value>
+    <comment>{0} = folder of the log files.</comment>
+  </data>
+  <data name="Error_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Main_EveryDay" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="Main_RepeatDays" xml:space="preserve">
+    <value>Repeat on these days</value>
+  </data>
+  <data name="Main_RepeatsEveryDay" xml:space="preserve">
+    <value>Repeats every day</value>
+  </data>
+  <data name="Main_RepeatsOn" xml:space="preserve">
+    <value>Repeats on {0}</value>
+  </data>
+  <data name="Day_ShortMonday" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="Day_ShortTuesday" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="Day_ShortWednesday" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="Day_ShortThursday" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="Day_ShortFriday" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="Day_ShortSaturday" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="Day_ShortSunday" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="Day_Monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Day_Tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Day_Wednesday" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Day_Thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Day_Friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Day_Saturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Day_Sunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+</root>

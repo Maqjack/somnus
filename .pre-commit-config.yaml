@@ -1,0 +1,44 @@
+# Local quality gate before every commit (SWPA 3.2 and 3.4).
+# One-time setup: `python -m pip install pre-commit`, `winget install Gitleaks.Gitleaks`,
+# then `pre-commit install`. CI runs the same checks, so skipping hooks only delays the failure.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # frozen: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+        # NuGet writes lock files without a final newline; fixing them would only cause churn.
+        exclude: packages\.lock\.json$
+      - id: mixed-line-ending
+        args: [--fix=no]
+      - id: fix-byte-order-marker
+        # Visual Studio writes solution files with a byte order mark.
+        exclude: \.sln$
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: check-case-conflict
+      - id: check-illegal-windows-names
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-xml
+      - id: check-yaml
+      - id: detect-private-key
+      - id: no-commit-to-branch
+        args: [--branch, main]
+
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks (staged changes)
+        entry: gitleaks git --pre-commit --redact --staged --verbose
+        language: system
+        pass_filenames: false
+
+      # IDE0005 is checked by the build, which sees the generated resource class (see ci.yml).
+      # --no-restore: pre-commit stashes unstaged files, and a restore against that partial tree fails.
+      - id: dotnet-format
+        name: dotnet format (verify only)
+        entry: dotnet format Somnus.sln --verify-no-changes --no-restore --exclude-diagnostics IDE0005 --include
+        language: system
+        types_or: [c#, xml]
+        pass_filenames: true

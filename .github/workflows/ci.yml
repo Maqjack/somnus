@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: "1"
+
+jobs:
+  build-test:
+    name: Build, test and audit
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET SDK from global.json
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
+
+      - name: Restore (locked mode)
+        run: dotnet restore Somnus.sln --locked-mode
+
+      # IDE0005 (unnecessary using) is left to the build: dotnet format cannot see the resource
+      # class that the build generates, so it would flag usings that the build proves necessary.
+      - name: Check formatting and code style
+        run: dotnet format Somnus.sln --verify-no-changes --no-restore --exclude-diagnostics IDE0005
+
+      - name: Build (Release, warnings as errors)
+        run: dotnet build Somnus.sln --configuration Release --no-restore
+
+      - name: Test with coverage
+        run: dotnet test --solution Somnus.sln --configuration Release --no-build --results-directory artifacts/test-results --coverlet
+
+      - name: Coverage gate (80% of lines in Core and Presentation)
+        shell: pwsh
+        run: ./scripts/check-coverage.ps1 -ResultsDirectory artifacts/test-results
+
+      - name: Known vulnerabilities in dependencies
+        shell: pwsh
+        run: ./scripts/check-vulnerable.ps1
+
+      - name: Tests of the build scripts
+        run: python -m unittest tests/test_build.py tests/test_rotate_backups.py
+
+      # Dependency licenses (SWPA 3.5 allow-list), self-test, manifest and forbidden content (SWPA 3.14).
+      - name: Build without the installers
+        run: python scripts/build.py --skip-installers
+
+      - name: Upload test results and license notices
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ci-reports
+          path: |
+            artifacts/test-results/
+            artifacts/THIRD_PARTY_LICENSES.txt
+          retention-days: 7
+          if-no-files-found: ignore
+
+  repo-checks:
+    name: Secret scan and project rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out (full history for the secret scan)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install gitleaks (checksum verified)
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          archive="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl --fail --silent --show-error --location --output "$archive" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${archive}"
+          echo "${GITLEAKS_SHA256}  ${archive}" | sha256sum --check --strict
+          tar --extract --gzip --file "$archive" gitleaks
+          sudo install --mode 0755 gitleaks /usr/local/bin/gitleaks
+
+      - name: Scan the whole git history for secrets
+        run: gitleaks git --redact --verbose --exit-code 1 .
+
+      - name: Project rules R-01, R-02 and R-07
+        shell: pwsh
+        run: ./scripts/check-rules.ps1

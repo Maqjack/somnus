@@ -1,0 +1,13 @@
+{
+  "platformOptions": {
+    "Coverlet": {
+      "include": "[Somnus.Core]*",
+      "exclude": "[coverlet.*]*,[xunit.*]*",
+      "excludeByAttribute": "GeneratedCode,CompilerGenerated,ExcludeFromCodeCoverage",
+      "excludeByFile": "**/*.g.cs,**/*.Designer.cs",
+      "format": "cobertura",
+      "skipAutoProps": true,
+      "excludeAssembliesWithoutSources": "MissingAll"
+    }
+  }
+}

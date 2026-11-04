@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="coverlet.MTP" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Somnus.Presentation\Somnus.Presentation.csproj" />
+  </ItemGroup>
+
+  <!-- Shared fakes of the Core ports, kept in one place. -->
+  <ItemGroup>
+    <Compile Include="..\Somnus.Core.Tests\TestDoubles\FakePowerController.cs" Link="TestDoubles\FakePowerController.cs" />
+    <Compile Include="..\Somnus.Core.Tests\TestDoubles\FakeKeepAwake.cs" Link="TestDoubles\FakeKeepAwake.cs" />
+    <Compile Include="..\Somnus.Core.Tests\TestDoubles\TestTimeZones.cs" Link="TestDoubles\TestTimeZones.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>
