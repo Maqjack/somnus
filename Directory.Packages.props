@@ -15,7 +15,7 @@
     <!-- The single composition root of the app (MIT). -->
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
     <!-- LoggerFactory behind AddLogging, which Serilog plugs into (MIT). -->
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.14" />
     <!-- Rolling log files in %APPDATA%\Somnus\logs, one per day, 7 kept (Apache-2.0). -->
     <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
