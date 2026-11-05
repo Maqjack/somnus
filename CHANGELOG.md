@@ -4,7 +4,7 @@ All notable changes to Somnus are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
 ### Added
 
@@ -75,7 +75,7 @@ and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the `rc` folder, and it also keeps release candidates, in `builds\rc\<version>`, without making
   them the current build.
 
-## [1.0.1] - 2026-10-23
+## 1.0.1 - 2026-10-23
 
 Fixes from the independent review of 1.0.0.
 
@@ -105,7 +105,7 @@ Fixes from the independent review of 1.0.0.
   checked against its SHA256 sums, makes it the current one in `dist\` and keeps the first build and
   the ten newest.
 
-## [1.0.0] - 2026-10-23
+## 1.0.0 - 2026-10-23
 
 First release.
 
@@ -135,7 +135,3 @@ First release.
 - For developers: four projects (Core, Presentation, Windows, App), 320 tests with an 80% line
   coverage gate, CI with formatting, analyzers as errors, vulnerability, license and secret
   checks, and a release workflow that builds from version tags.
-
-[Unreleased]: https://github.com/Maqjack/somnus/compare/v1.0.1...HEAD
-[1.0.1]: https://github.com/Maqjack/somnus/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/Maqjack/somnus/releases/tag/v1.0.0
