@@ -14,11 +14,17 @@ fioletowym oknie chowającym się do zasobnika.
 
 ## Kto co zrobił
 
-Mac ([@Maqjack](https://github.com/Maqjack)) wymyślił Somnusa, ustalił jego zakres i zasady, podjął
-każdą decyzję produktową i testował każdą wersję kandydującą na własnym komputerze. Kod, testy i
-dokumenty napisali agenci AI (Claude Code) pracujący według SWPA, spisanego standardu tworzenia
-aplikacji, którego Mac używa w swoich projektach. Osobni audytorzy AI sprawdzali wygodę użycia,
-wygląd i build, zanim zmiana mogła wejść.
+Mac ([@Maqjack](https://github.com/Maqjack)) wymyślił Somnusa i podejmował wszystkie decyzje
+produktowe. Odpowiadał też za:
+
+- **projekt interfejsu**: wygląd każdego okna, kolory i teksty;
+- **porządek w projekcie**: zakres, zasady i kolejność prac;
+- **pipeline wytwarzania**, który sam zbudował: spisany standard (SWPA), przeglądy i bramki jakości,
+  przez które przechodziła każda zmiana;
+- **feedback i testy manualne**: każdą wersję kandydującą sprawdzał ręcznie na prawdziwym komputerze.
+
+Kod i dokumenty pisali agenci AI (Claude Code) w ramach tego pipeline'u; prowadzili też część testów:
+testy automatyczne i osobne audyty wygody użycia, wyglądu i builda.
 
 ## W liczbach
 

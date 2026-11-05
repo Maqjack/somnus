@@ -13,11 +13,17 @@ at a clock time, with a 60-second warning you can stop, in a purple window that 
 
 ## Who did what
 
-Mac ([@Maqjack](https://github.com/Maqjack)) came up with Somnus, set its scope and its rules, made
-every product decision and tested each release candidate on his own PC. The code, the tests and the
-documents were written by AI coding agents (Claude Code) working under SWPA, a written development
-standard Mac uses for his projects. Separate AI auditors checked the user experience, the look and
-the build before a change could merge.
+Mac ([@Maqjack](https://github.com/Maqjack)) came up with Somnus and made every product decision.
+Mac was also responsible for:
+
+- **the front-end design**: the look of every window, the colours and the texts;
+- **keeping the project in order**: the scope, the rules and the order of the work;
+- **the development pipeline**, which Mac built: the written standard (SWPA), the reviews and the
+  quality gates that every change went through;
+- **feedback and manual testing**: every release candidate was tried by hand on a real PC.
+
+AI coding agents (Claude Code) wrote the code and the documents within that pipeline and ran part of
+the testing: the automated tests and separate audits of the user experience, the look and the build.
 
 ## In numbers
 
