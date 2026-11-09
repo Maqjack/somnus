@@ -4,6 +4,7 @@ using Somnus.Core.Scheduling;
 using Somnus.Core.Settings;
 using Somnus.Presentation.Services;
 using Somnus.Presentation.Tests.TestDoubles;
+using Somnus.Presentation.ViewModels;
 
 namespace Somnus.Presentation.Tests.Services;
 
@@ -26,6 +27,61 @@ public sealed class ScheduleCoordinatorTests : IDisposable
         Assert.Equal(At, settings.ScheduleTime);
         Assert.Equal(PowerAction.Sleep, settings.ScheduleAction);
         Assert.Equal(TestHarness.StartTime.AddMinutes(30), _harness.Session.Snapshot.Plan!.Target);
+        Assert.False(settings.ScheduleForceCloseApps);
+    }
+
+    [Fact]
+    public void Begin_KeepsTheChoiceToForceAppsToClose()
+    {
+        _harness.Schedule.Begin(ForcedShutdownEveryDay());
+
+        Assert.True(_harness.Settings.Current.ScheduleForceCloseApps);
+        Assert.True(_harness.Session.Snapshot.Plan!.ForceCloseApps);
+    }
+
+    [Fact]
+    public void AForcedSchedule_WarnsAndForcesAppsToCloseOnTwoRunsInARow()
+    {
+        using var shell = _harness.CreateShell();
+        _harness.Schedule.Begin(ForcedShutdownEveryDay());
+
+        RunWithItsWarning(_harness, shell);
+        RunWithItsWarning(_harness, shell);
+
+        Assert.Equal(2, _harness.Power.Calls.Count);
+        Assert.All(_harness.Power.Calls, call => Assert.Equal((PowerAction.Shutdown, true), (call.Action, call.ForceCloseApps)));
+    }
+
+    [Fact]
+    public void Resume_WarnsAndForcesAppsToCloseOnTheNextRun()
+    {
+        using var harness = new TestHarness(AppSettings.Default with
+        {
+            ScheduleDays = WeekDays.EveryDay,
+            ScheduleTime = At,
+            ScheduleAction = PowerAction.Shutdown,
+            ScheduleForceCloseApps = true,
+        });
+        using var shell = harness.CreateShell();
+
+        harness.Schedule.Resume();
+        Assert.True(harness.Schedule.Request!.ForceCloseApps);
+        RunWithItsWarning(harness, shell);
+
+        var call = Assert.Single(harness.Power.Calls);
+        Assert.Equal(PowerAction.Shutdown, call.Action);
+        Assert.True(call.ForceCloseApps);
+    }
+
+    [Fact]
+    public void Cancelling_ForgetsTheChoiceToForceAppsToClose()
+    {
+        _harness.Schedule.Begin(ForcedShutdownEveryDay());
+
+        _harness.Session.Cancel();
+
+        Assert.Equal(WeekDays.None, _harness.Settings.Current.ScheduleDays);
+        Assert.False(_harness.Settings.Current.ScheduleForceCloseApps);
     }
 
     [Theory]
@@ -169,6 +225,23 @@ public sealed class ScheduleCoordinatorTests : IDisposable
     }
 
     private static CountdownRequest EveryDay() => CountdownRequest.At(At, PowerAction.Sleep, repeat: WeekDays.EveryDay);
+
+    private static CountdownRequest ForcedShutdownEveryDay() => CountdownRequest.At(At, PowerAction.Shutdown, forceCloseApps: true, WeekDays.EveryDay);
+
+    /// <summary>
+    /// Goes through the next run: straight to two minutes before it (still ahead, so no sleep), tick by
+    /// tick into the warning, which must name the data loss, then past the target.
+    /// </summary>
+    private static void RunWithItsWarning(TestHarness harness, ShellViewModel shell)
+    {
+        var target = harness.Session.Snapshot.Plan!.Target;
+        harness.Time.Advance(target - harness.Time.GetUtcNow() - TimeSpan.FromMinutes(2));
+        harness.AdvanceInTicks(TimeSpan.FromSeconds(90));
+        Assert.True(shell.IsWarningOpen);
+        Assert.True(shell.Warning.IsForceWarningVisible);
+
+        harness.AdvanceInTicks(TimeSpan.FromSeconds(31));
+    }
 
     private sealed class NeverDispatcher : IUiDispatcher
     {

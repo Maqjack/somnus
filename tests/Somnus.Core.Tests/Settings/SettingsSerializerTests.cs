@@ -19,6 +19,10 @@ public sealed class SettingsSerializerTests
         LastUnit = TimeUnit.Seconds,
         LastAction = PowerAction.Shutdown,
         LastAtTime = new TimeOnly(7, 5),
+        ScheduleDays = WeekDays.Monday | WeekDays.Friday,
+        ScheduleTime = new TimeOnly(1, 30),
+        ScheduleAction = PowerAction.Shutdown,
+        ScheduleForceCloseApps = true,
     };
 
     [Fact]
@@ -32,7 +36,7 @@ public sealed class SettingsSerializerTests
     }
 
     [Fact]
-    public void Serialize_WritesReadableJsonWithoutAnyForceField()
+    public void Serialize_WritesReadableJsonWithForceOnlyForTheSchedule()
     {
         var json = SettingsSerializer.Serialize(Customized);
 
@@ -43,8 +47,24 @@ public sealed class SettingsSerializerTests
         Assert.Contains("\"sound\": \"File\"", json, StringComparison.Ordinal);
         Assert.Contains("\"soundFile\": \"C:\\\\Users\\\\Mac\\\\Music\\\\Morning.mp3\"", json, StringComparison.Ordinal);
         Assert.DoesNotContain("lullabyEnabled", json, StringComparison.Ordinal);
-        Assert.DoesNotContain("force", json, StringComparison.OrdinalIgnoreCase);
+
+        // A one-time countdown never remembers "force close apps" (R-05); only the schedule does (ADR 0013).
+        Assert.Contains("\"scheduleForceCloseApps\": true", json, StringComparison.Ordinal);
+        Assert.DoesNotContain("lastForce", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("\"forceCloseApps\"", json, StringComparison.OrdinalIgnoreCase);
         Assert.EndsWith("}\n", json, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Deserialize_ForceForAScheduleThatDoesNotShutDown_IsTurnedOffAndReported()
+    {
+        var json = $$"""{ "scheduleDays": {{(int)WeekDays.Monday}}, "scheduleAction": "Sleep", "scheduleForceCloseApps": true }""";
+
+        var result = SettingsSerializer.Deserialize(json);
+
+        Assert.False(result.Settings.ScheduleForceCloseApps);
+        Assert.Equal(PowerAction.Sleep, result.Settings.ScheduleAction);
+        Assert.Single(result.Problems);
     }
 
     [Fact]
@@ -160,7 +180,8 @@ public sealed class SettingsSerializerTests
               "lastAmount": "thirty",
               "lastUnit": "Days",
               "lastAction": "Reboot",
-              "lastAtTime": "25:00"
+              "lastAtTime": "25:00",
+              "scheduleForceCloseApps": "yes"
             }
             """;
 
@@ -168,7 +189,7 @@ public sealed class SettingsSerializerTests
 
         Assert.False(result.IsCorrupt);
         Assert.Equal(AppSettings.Default with { Sound = EndSound.None }, result.Settings);
-        Assert.Equal(8, result.Problems.Count);
+        Assert.Equal(9, result.Problems.Count);
     }
 
     [Fact]

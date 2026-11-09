@@ -124,6 +124,7 @@ public sealed class ViewSmokeTests(WpfFixture wpf)
 
             using var harness = new TestHarness();
             using var main = harness.CreateMain(dryRun: true);
+            using var shell = harness.CreateShell();
 
             main.IsAtMode = true;
             main.IsEveryDay = true;
@@ -132,7 +133,7 @@ public sealed class ViewSmokeTests(WpfFixture wpf)
             main.Days[5].IsSelected = false;
             main.Days[6].IsSelected = false;
             main.IsShutdownSelected = true;
-            Assert.False(main.IsForceOptionVisible);
+            Assert.True(main.IsForceOptionVisible);
             Render(new MainWindow(main), "main-days-shutdown.png");
 
             main.StartCommand.Execute(null);
@@ -141,6 +142,20 @@ public sealed class ViewSmokeTests(WpfFixture wpf)
 
             main.RequestCancelCommand.Execute(null);
             Render(new ConfirmDialog(harness.Dialogs.Requests[^1]), "confirm-schedule.png");
+
+            // A schedule may force apps to close (ADR 0013): the box, its warning, and the running schedule.
+            main.ForceCloseApps = true;
+            Assert.True(main.IsForceWarningVisible);
+            Render(new MainWindow(main), "main-days-force.png");
+
+            main.StartCommand.Execute(null);
+            Assert.True(harness.Schedule.Request!.ForceCloseApps);
+            Render(new MainWindow(main), "main-repeating-force.png");
+
+            // The warning before a run of that schedule names the data loss (#125).
+            RunUpToTheWarning(harness, shell);
+            Render(new WarningWindow(shell.Warning), "warning-force.png");
+            main.RequestCancelCommand.Execute(null);
 
             Localizer.Instance.Language = AppLanguage.Polish;
             harness.Localizer.Language = AppLanguage.Polish;
@@ -151,6 +166,20 @@ public sealed class ViewSmokeTests(WpfFixture wpf)
                 polishMain.IsEveryDay = true;
                 polishMain.Days[6].IsSelected = false;
                 Render(new MainWindow(polishMain), "main-days-pl.png");
+
+                polishMain.HourText = "23";
+                polishMain.MinuteText = "30";
+                polishMain.IsShutdownSelected = true;
+                polishMain.ForceCloseApps = true;
+                Render(new MainWindow(polishMain), "main-days-force-pl.png");
+
+                polishMain.StartCommand.Execute(null);
+                Assert.True(harness.Schedule.Request!.ForceCloseApps);
+                Render(new MainWindow(polishMain), "main-repeating-force-pl.png");
+
+                RunUpToTheWarning(harness, shell);
+                Render(new WarningWindow(shell.Warning), "warning-force-pl.png");
+                polishMain.RequestCancelCommand.Execute(null);
             }
             finally
             {
@@ -378,6 +407,19 @@ public sealed class ViewSmokeTests(WpfFixture wpf)
     /// Lays out the content of <paramref name="window"/> without showing it and saves it as a PNG.
     /// </summary>
     private static void Render(Window window, string fileName) => Save(OffscreenRenderer.LayOut(window), fileName);
+
+    /// <summary>
+    /// Moves the clock straight to two minutes before the running countdown's target (the target is
+    /// still ahead, so this is no sleep), then tick by tick into its warning, 45 seconds before the action.
+    /// </summary>
+    private static void RunUpToTheWarning(TestHarness harness, ShellViewModel shell)
+    {
+        var target = harness.Session.Snapshot.Plan!.Target;
+        harness.Time.Advance(target - harness.Time.GetUtcNow() - TimeSpan.FromMinutes(2));
+        harness.AdvanceInTicks(TimeSpan.FromSeconds(75));
+        Assert.True(shell.IsWarningOpen);
+        Assert.True(shell.Warning.IsForceWarningVisible);
+    }
 
     /// <summary>Saves a laid-out window as a PNG.</summary>
     private static void Save(FrameworkElement root, string fileName)

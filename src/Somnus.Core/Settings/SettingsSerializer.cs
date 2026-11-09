@@ -59,6 +59,7 @@ public static class SettingsSerializer
             writer.WriteNumber(Fields.ScheduleDays, (int)settings.ScheduleDays);
             writer.WriteString(Fields.ScheduleTime, settings.ScheduleTime.ToString(ClockTimeFormat, CultureInfo.InvariantCulture));
             writer.WriteString(Fields.ScheduleAction, settings.ScheduleAction.ToString());
+            writer.WriteBoolean(Fields.ScheduleForceCloseApps, settings.ScheduleForceCloseApps);
             writer.WriteEndObject();
         }
 
@@ -110,6 +111,7 @@ public static class SettingsSerializer
                 ScheduleDays = reader.Read(Fields.ScheduleDays, TryReadWeekDays, defaults.ScheduleDays),
                 ScheduleTime = reader.Read(Fields.ScheduleTime, TryReadClockTime, defaults.ScheduleTime),
                 ScheduleAction = reader.Read(Fields.ScheduleAction, TryReadEnum<PowerAction>, defaults.ScheduleAction),
+                ScheduleForceCloseApps = reader.Read(Fields.ScheduleForceCloseApps, TryReadBoolean, defaults.ScheduleForceCloseApps),
             };
 
             var lastDelay = CountdownInput.ParseDelay(settings.LastAmount.ToString(CultureInfo.InvariantCulture), settings.LastUnit);
@@ -117,6 +119,12 @@ public static class SettingsSerializer
             {
                 reader.Problems.Add($"'{Fields.LastAmount}' {settings.LastAmount} {settings.LastUnit} is outside 10 s to 99 h; the default is used.");
                 settings = settings with { LastAmount = defaults.LastAmount, LastUnit = defaults.LastUnit };
+            }
+
+            if (settings.ScheduleForceCloseApps && settings.ScheduleAction != PowerAction.Shutdown)
+            {
+                reader.Problems.Add($"'{Fields.ScheduleForceCloseApps}' applies only to a shutdown; it is turned off.");
+                settings = settings with { ScheduleForceCloseApps = false };
             }
 
             return new SettingsReadResult(settings, reader.Problems, IsCorrupt: false);
@@ -216,6 +224,7 @@ public static class SettingsSerializer
         public const string ScheduleDays = "scheduleDays";
         public const string ScheduleTime = "scheduleTime";
         public const string ScheduleAction = "scheduleAction";
+        public const string ScheduleForceCloseApps = "scheduleForceCloseApps";
     }
 
     private delegate bool TryRead<T>(JsonElement element, out T value);

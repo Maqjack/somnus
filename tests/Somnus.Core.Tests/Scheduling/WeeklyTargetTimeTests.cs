@@ -103,9 +103,11 @@ public sealed class WeeklyTargetTimeTests
     }
 
     [Fact]
-    public void Request_ThatRepeats_CannotForceAppsToClose()
+    public void Request_ThatRepeats_ForcesAppsToCloseOnlyOnAShutdown()
     {
-        Assert.Throws<ArgumentException>(() => CountdownRequest.At(new TimeOnly(23, 0), PowerAction.Shutdown, true, WeekDays.Friday));
+        // ADR 0013: a schedule may force apps to close, like a one-time shutdown.
+        Assert.True(CountdownRequest.At(new TimeOnly(23, 0), PowerAction.Shutdown, true, WeekDays.Friday).ForceCloseApps);
+        Assert.Throws<ArgumentException>(() => CountdownRequest.At(new TimeOnly(23, 0), PowerAction.Sleep, true, WeekDays.Friday));
     }
 
     [Fact]

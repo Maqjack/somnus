@@ -62,25 +62,20 @@ public sealed record CountdownRequest
     /// </summary>
     /// <param name="clockTime">The local clock time; seconds are dropped.</param>
     /// <param name="action">The power action.</param>
-    /// <param name="forceCloseApps">Force apps to close; allowed only for <see cref="PowerAction.Shutdown"/>.</param>
+    /// <param name="forceCloseApps">
+    /// Force apps to close; allowed only for <see cref="PowerAction.Shutdown"/>. A repeating shutdown
+    /// forces them on every run (ADR 0013).
+    /// </param>
     /// <param name="repeat">The days on which it repeats, if any.</param>
     /// <returns>The request.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The action or the days are out of range.</exception>
-    /// <exception cref="ArgumentException">
-    /// Force-closing apps was asked for an action other than shutdown, or for a repeating countdown:
-    /// that option is never remembered (rule R-05), so it cannot apply to later runs.
-    /// </exception>
+    /// <exception cref="ArgumentException">Force-closing apps was asked for an action other than shutdown.</exception>
     public static CountdownRequest At(TimeOnly clockTime, PowerAction action, bool forceCloseApps = false, WeekDays repeat = WeekDays.None)
     {
         Validate(action, forceCloseApps);
         if ((repeat & ~WeekDays.EveryDay) != WeekDays.None)
         {
             throw new ArgumentOutOfRangeException(nameof(repeat), repeat, "Unknown days of the week.");
-        }
-
-        if (forceCloseApps && repeat != WeekDays.None)
-        {
-            throw new ArgumentException("A repeating countdown cannot force apps to close.", nameof(forceCloseApps));
         }
 
         return new CountdownRequest(TimeMode.At, TimeSpan.Zero, new TimeOnly(clockTime.Hour, clockTime.Minute), action, forceCloseApps, repeat);

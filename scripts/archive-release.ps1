@@ -13,6 +13,8 @@
 
     Needs gh signed in to GitHub, and Python 3 for the rotation.
 
+    The repository comes from the working copy's origin remote; -Repository picks another one.
+
 .EXAMPLE
     ./scripts/archive-release.ps1 -Version 1.1.0
 
@@ -25,7 +27,7 @@ param(
     [ValidatePattern('^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$')]
     [string] $Version,
 
-    [string] $Repository = 'Maqjack/somnus',
+    [string] $Repository,
 
     [switch] $NotCurrent
 )
@@ -34,6 +36,18 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+if (-not $Repository) {
+    Push-Location $repoRoot
+    try {
+        $Repository = gh repo view --json nameWithOwner --jq .nameWithOwner
+    }
+    finally {
+        Pop-Location
+    }
+    if ($LASTEXITCODE -ne 0 -or -not $Repository) {
+        throw 'Could not tell the repository from the origin remote; pass -Repository.'
+    }
+}
 $isCandidate = $Version.Contains('-')
 $download = Join-Path $repoRoot "artifacts/release-download/$Version"
 $reports = Join-Path $repoRoot "artifacts/release-reports/$Version"

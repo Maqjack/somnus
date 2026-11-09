@@ -23,6 +23,7 @@
     <Compile Include="..\Somnus.Core.Tests\TestDoubles\TestTimeZones.cs" Link="TestDoubles\TestTimeZones.cs" />
     <Compile Include="..\Somnus.Presentation.Tests\TestDoubles\PresentationFakes.cs" Link="TestDoubles\PresentationFakes.cs" />
     <Compile Include="..\Somnus.Presentation.Tests\TestDoubles\TestHarness.cs" Link="TestDoubles\TestHarness.cs" />
+    <Compile Include="..\Somnus.Windows.Tests\TestDoubles\ListLogger.cs" Link="TestDoubles\ListLogger.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,8 @@ namespace Somnus.Core.Settings;
 /// The user's settings and, when <see cref="RememberLast"/> is on, the last countdown they started.
 /// </summary>
 /// <remarks>
-/// There is deliberately no field for "force close apps": it is never remembered (rule R-05).
+/// A one-time countdown never remembers "force close apps" (rule R-05). Only a running schedule keeps
+/// that choice, in <see cref="ScheduleForceCloseApps"/>, and it goes with the schedule (ADR 0013).
 /// </remarks>
 public sealed record AppSettings
 {
@@ -67,4 +68,10 @@ public sealed record AppSettings
 
     /// <summary>Gets the power action of the running schedule.</summary>
     public PowerAction ScheduleAction { get; init; } = PowerAction.Sleep;
+
+    /// <summary>
+    /// Gets a value indicating whether the running schedule closes apps without asking when it shuts
+    /// down (ADR 0013). Default: off; it applies only to a shutdown.
+    /// </summary>
+    public bool ScheduleForceCloseApps { get; init; }
 }

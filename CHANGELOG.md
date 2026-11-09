@@ -25,6 +25,9 @@ and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- A schedule can force apps to close when it shuts the PC down: **Force close apps** now stays
+  next to the days. The choice is kept with the schedule, and the warning about unsaved work shows
+  in the window and before every shutdown (ADR 0013).
 - The lullaby switch is now a choice of sound for the last 20 seconds: the lullaby (the default for a
   new install), no sound, or the first 20 seconds of your own MP3, WAV, WMA, M4A, AAC or FLAC file.
   A file that is gone plays the lullaby instead; an earlier setting is kept.

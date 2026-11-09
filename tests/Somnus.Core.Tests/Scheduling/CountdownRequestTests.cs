@@ -45,6 +45,19 @@ public sealed class CountdownRequestTests
     }
 
     [Fact]
+    public void ForceCloseApps_IsKeptOnEveryRunOfARepeatingShutdown()
+    {
+        var request = CountdownRequest.At(new TimeOnly(23, 0), PowerAction.Shutdown, forceCloseApps: true, WeekDays.EveryDay);
+
+        var first = request.ToPlan(Now, TimeZoneInfo.Utc, warningEnabled: true);
+        var next = request.ToNextPlan(Now, first.Target, TimeZoneInfo.Utc, warningEnabled: true);
+
+        Assert.True(first.ForceCloseApps);
+        Assert.True(next.ForceCloseApps);
+        Assert.True(next.Repeats);
+    }
+
+    [Fact]
     public void UnknownAction_IsRejected()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => CountdownRequest.In(TimeSpan.FromMinutes(1), (PowerAction)99));

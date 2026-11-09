@@ -154,18 +154,75 @@ public sealed class RepeatDaysTests : IDisposable
     }
 
     [Fact]
-    public void ForceCloseApps_DoesNotApplyToARepeatingCountdown()
+    public void ForceCloseApps_StaysForARepeatingShutdown()
     {
         using var viewModel = _harness.CreateMain();
         viewModel.IsAtMode = true;
         viewModel.IsShutdownSelected = true;
         viewModel.ForceCloseApps = true;
-        Assert.True(viewModel.IsForceOptionVisible);
 
         viewModel.Days[0].IsSelected = true;
+        viewModel.StartCommand.Execute(null);
 
-        Assert.False(viewModel.ForceCloseApps);
-        Assert.False(viewModel.IsForceOptionVisible);
+        Assert.True(viewModel.IsForceOptionVisible);
+        Assert.True(viewModel.IsForceWarningVisible);
+        Assert.True(_harness.Schedule.Request!.ForceCloseApps);
+        Assert.True(_harness.Settings.Current.ScheduleForceCloseApps);
+    }
+
+    [Fact]
+    public void ForceInARunningSchedule_IsSavedForTheNextRunsAndCanBeTurnedOffAgain()
+    {
+        // Mac's way after the update: his schedule from rc.8 has no force (#125).
+        using var viewModel = _harness.CreateMain();
+        viewModel.IsAtMode = true;
+        viewModel.IsShutdownSelected = true;
+        viewModel.Days[0].IsSelected = true;
+        viewModel.StartCommand.Execute(null);
+        Assert.False(_harness.Schedule.Request!.ForceCloseApps);
+
+        viewModel.ForceCloseApps = true;
+        Assert.True(viewModel.HasPendingChanges);
+        viewModel.RestartCommand.Execute(null);
+
+        Assert.True(_harness.Schedule.Request!.ForceCloseApps);
+        Assert.True(_harness.Settings.Current.ScheduleForceCloseApps);
+        Assert.True(_harness.Session.Snapshot.Plan!.ForceCloseApps);
+        Assert.False(viewModel.HasPendingChanges);
+
+        viewModel.ForceCloseApps = false;
+        Assert.True(viewModel.HasPendingChanges);
+        viewModel.RestartCommand.Execute(null);
+
+        Assert.False(_harness.Schedule.Request!.ForceCloseApps);
+        Assert.False(_harness.Settings.Current.ScheduleForceCloseApps);
+        Assert.False(_harness.Session.Snapshot.Plan!.ForceCloseApps);
+    }
+
+    [Fact]
+    public void ARunningScheduleWithForce_ShowsTheTickedBoxAndTheWarningOnTheNextStart()
+    {
+        var settings = AppSettings.Default with
+        {
+            RememberLast = false,
+            ScheduleDays = WeekDays.Tuesday,
+            ScheduleTime = new TimeOnly(1, 0),
+            ScheduleAction = PowerAction.Shutdown,
+            ScheduleForceCloseApps = true,
+        };
+        using var harness = new TestHarness(settings);
+
+        harness.Schedule.Resume();
+        using var viewModel = harness.CreateMain();
+        harness.AdvanceInTicks(TimeSpan.FromSeconds(2));
+
+        Assert.True(viewModel.IsActive);
+        Assert.True(viewModel.IsShutdownSelected);
+        Assert.True(viewModel.ForceCloseApps);
+        Assert.True(viewModel.IsForceWarningVisible);
+
+        // The inputs match the schedule, so "Save" does not appear by itself after a restart (#125).
+        Assert.False(viewModel.HasPendingChanges);
     }
 
     [Fact]

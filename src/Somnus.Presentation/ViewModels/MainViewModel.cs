@@ -101,6 +101,10 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
             day.IsSelected = initial.LastRepeat.HasFlag(day.Day);
         }
 
+        // A running schedule shows its own choice to force apps to close (ADR 0013).
+        ForceCloseApps = settings.Current is { ScheduleDays: not WeekDays.None, ScheduleForceCloseApps: true }
+            && Action == PowerAction.Shutdown;
+
         _session.Changed += OnSessionChanged;
         _localizer.LanguageChanged += OnLanguageChanged;
         _clockTimer = timeProvider.CreateTimer(_ => _dispatcher.Post(RefreshDerived), null, ClockRefreshInterval, ClockRefreshInterval);
@@ -148,7 +152,10 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     public partial PowerAction Action { get; set; }
 
-    /// <summary>Gets or sets a value indicating whether a shutdown closes apps without asking (rule R-05).</summary>
+    /// <summary>
+    /// Gets or sets a value indicating whether a shutdown closes apps without asking (rule R-05). A
+    /// one-time countdown never remembers it; a schedule keeps it (ADR 0013).
+    /// </summary>
     [ObservableProperty]
     public partial bool ForceCloseApps { get; set; }
 
@@ -239,10 +246,10 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
     public string? HibernateUnavailableReason => _support.CanHibernate ? null : _localizer[nameof(Strings.Main_HibernateUnavailable)];
 
     /// <summary>
-    /// Gets a value indicating whether the "force close apps" box is shown: for a shutdown that runs
-    /// once, because the option is never remembered (rule R-05).
+    /// Gets a value indicating whether the "force close apps" box is shown: for every shutdown, once or
+    /// on a schedule (ADR 0013).
     /// </summary>
-    public bool IsForceOptionVisible => Action == PowerAction.Shutdown && !IsRepeating;
+    public bool IsForceOptionVisible => Action == PowerAction.Shutdown;
 
     /// <summary>Gets a value indicating whether the data-loss warning is shown (rule R-05).</summary>
     public bool IsForceWarningVisible => ForceCloseApps && IsForceOptionVisible;
@@ -534,19 +541,17 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
 
     private WeekDays RepeatDays => Days.Where(day => day.IsSelected).Aggregate(WeekDays.None, (all, day) => all | day.Day);
 
-    private bool IsRepeating => Mode == TimeMode.At && RepeatDays != WeekDays.None;
-
     private DayOption[] CreateDayOptions()
     {
         DayOption[] days =
         [
-            new(WeekDays.Monday, OnDaysChanged),
-            new(WeekDays.Tuesday, OnDaysChanged),
-            new(WeekDays.Wednesday, OnDaysChanged),
-            new(WeekDays.Thursday, OnDaysChanged),
-            new(WeekDays.Friday, OnDaysChanged),
-            new(WeekDays.Saturday, OnDaysChanged),
-            new(WeekDays.Sunday, OnDaysChanged),
+            new(WeekDays.Monday, RefreshDerived),
+            new(WeekDays.Tuesday, RefreshDerived),
+            new(WeekDays.Wednesday, RefreshDerived),
+            new(WeekDays.Thursday, RefreshDerived),
+            new(WeekDays.Friday, RefreshDerived),
+            new(WeekDays.Saturday, RefreshDerived),
+            new(WeekDays.Sunday, RefreshDerived),
         ];
         NameDays(days);
         return days;
@@ -561,17 +566,6 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
         }
     }
 
-    private void OnDaysChanged()
-    {
-        // Rule R-05: the force option never carries over to a repeating countdown.
-        if (IsRepeating)
-        {
-            ForceCloseApps = false;
-        }
-
-        RefreshDerived();
-    }
-
     private List<UnitOption> CreateUnitOptions() =>
     [
         new(TimeUnit.Seconds, _localizer[nameof(Strings.Unit_Seconds)]),
@@ -579,7 +573,7 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
         new(TimeUnit.Hours, _localizer[nameof(Strings.Unit_Hours)]),
     ];
 
-    partial void OnModeChanged(TimeMode value) => OnDaysChanged();
+    partial void OnModeChanged(TimeMode value) => RefreshDerived();
 
     partial void OnAmountTextChanged(string value) => RefreshDerived();
 

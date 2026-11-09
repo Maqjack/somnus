@@ -1,12 +1,14 @@
 using Somnus.Core.Countdown;
+using Somnus.Core.Power;
 using Somnus.Core.Scheduling;
 
 namespace Somnus.Presentation.Services;
 
 /// <summary>
 /// Keeps a repeating countdown going (#83): after every run, and after a run the PC slept through,
-/// it starts the next one, without an action of its own (assumption A8). The schedule is kept in the
-/// settings, so it survives a restart, and it ends when the user cancels the countdown.
+/// it starts the next one, without an action of its own (assumption A8). The schedule, with its choice
+/// to force apps to close (ADR 0013), is kept in the settings, so it survives a restart, and it ends
+/// when the user cancels the countdown.
 /// </summary>
 public sealed class ScheduleCoordinator : IDisposable
 {
@@ -51,6 +53,7 @@ public sealed class ScheduleCoordinator : IDisposable
             ScheduleDays = request.Repeat,
             ScheduleTime = request.ClockTime,
             ScheduleAction = request.Action,
+            ScheduleForceCloseApps = request.ForceCloseApps,
         });
         _session.Start(request.ToPlan(_timeProvider.GetUtcNow(), _timeProvider.LocalTimeZone, _settings.Current.WarningEnabled));
     }
@@ -67,7 +70,8 @@ public sealed class ScheduleCoordinator : IDisposable
             return;
         }
 
-        var request = CountdownRequest.At(current.ScheduleTime, current.ScheduleAction, repeat: current.ScheduleDays);
+        var force = current.ScheduleForceCloseApps && current.ScheduleAction == PowerAction.Shutdown;
+        var request = CountdownRequest.At(current.ScheduleTime, current.ScheduleAction, force, current.ScheduleDays);
         var now = _timeProvider.GetUtcNow();
         var plan = request.ToPlan(now, _timeProvider.LocalTimeZone, current.WarningEnabled);
         if (plan.Target - now < CountdownSession.WarningLeadTime)
@@ -85,7 +89,7 @@ public sealed class ScheduleCoordinator : IDisposable
         if (Request is not null)
         {
             Request = null;
-            _settings.Update(current => current with { ScheduleDays = WeekDays.None });
+            _settings.Update(current => current with { ScheduleDays = WeekDays.None, ScheduleForceCloseApps = false });
         }
     }
 

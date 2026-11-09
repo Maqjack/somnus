@@ -241,6 +241,23 @@ public sealed class MainViewModelTests : IDisposable
     }
 
     [Fact]
+    public void ForceCloseApps_OfAOneTimeCountdown_IsNeverRemembered()
+    {
+        using (var viewModel = _harness.CreateMain())
+        {
+            viewModel.IsShutdownSelected = true;
+            viewModel.ForceCloseApps = true;
+            viewModel.StartCommand.Execute(null);
+        }
+
+        using var next = _harness.CreateMain();
+
+        Assert.True(next.IsShutdownSelected);
+        Assert.False(next.ForceCloseApps);
+        Assert.False(_harness.Settings.Current.ScheduleForceCloseApps);
+    }
+
+    [Fact]
     public void ForcedShutdown_ReachesThePlan()
     {
         using var viewModel = _harness.CreateMain();
