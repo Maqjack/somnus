@@ -6,7 +6,8 @@
 .DESCRIPTION
     Takes the section "## [<version>]" of CHANGELOG.md (or "## [Unreleased]" for a pre-release
     without its own section), then adds the SHA256 checksums of every file (SWPA 3.10) and the
-    note about the unsigned installer (ADR 0004).
+    note about the unsigned installer (ADR 0004). The public repository's copy of the changelog
+    has its version headings without brackets ("## 1.1.0 - 2026-11-13"), which works the same.
 
 .EXAMPLE
     ./scripts/release-notes.ps1 -Version 1.0.0 -ChecksumsFile artifacts/release/SHA256SUMS.txt -OutputFile artifacts/release-notes.md
@@ -32,9 +33,10 @@ $changelog = Get-Content -Path (Join-Path $repoRoot 'CHANGELOG.md') -Encoding UT
 function Get-Section {
     param([string] $Heading)
 
+    $pattern = '^## \[?' + [regex]::Escape($Heading) + '\]?(\s|$)'
     $start = -1
     for ($i = 0; $i -lt $changelog.Count; $i++) {
-        if ($changelog[$i].StartsWith("## [$Heading]")) {
+        if ($changelog[$i] -match $pattern) {
             $start = $i + 1
             break
         }
@@ -46,7 +48,7 @@ function Get-Section {
 
     # The section ends at the next version heading or at the link definitions at the bottom.
     $lines = [System.Collections.Generic.List[string]]::new()
-    for ($i = $start; $i -lt $changelog.Count -and -not $changelog[$i].StartsWith('## [') -and $changelog[$i] -notmatch '^\[[^\]]+\]: '; $i++) {
+    for ($i = $start; $i -lt $changelog.Count -and -not $changelog[$i].StartsWith('## ') -and $changelog[$i] -notmatch '^\[[^\]]+\]: '; $i++) {
         $lines.Add($changelog[$i])
     }
 

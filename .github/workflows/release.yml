@@ -3,9 +3,17 @@ name: Release
 # Builds a release from a clean checkout of a version tag (SWPA stage 5). Every release starts
 # as a draft: it becomes visible only when Mac publishes it (SWPA stage 7). Tags with a
 # pre-release suffix (v0.9.0-rc.1) are also marked as pre-releases.
+# Started by hand (workflow_dispatch), it builds and checks the given version from a branch and
+# keeps the files as a workflow artifact, without a release: a trial that this repository, the
+# public one included, can build its own releases (code signing needs that).
 on:
   push:
     tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to build, for example 1.1.0
+        required: true
 
 permissions:
   contents: read
@@ -29,12 +37,13 @@ jobs:
         with:
           persist-credentials: false
 
-      # The tag reaches the script as an environment variable, never as script text.
+      # The tag (or the version typed for a trial build) reaches the script as an environment
+      # variable, never as script text.
       - name: Read the version from the tag
         id: version
         shell: pwsh
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
         run: |
           $version = $env:TAG.TrimStart('v')
           if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "Tag $env:TAG is not vMAJOR.MINOR.PATCH[-suffix]." }
@@ -106,6 +115,8 @@ jobs:
   publish:
     name: Create the GitHub release
     needs: build
+    # A trial build started by hand makes no release.
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
