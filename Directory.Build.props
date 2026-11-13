@@ -24,7 +24,7 @@
     <Company>Maqjack</Company>
     <Authors>Maqjack</Authors>
     <Copyright>Copyright (c) 2026 Mac (Maqjack)</Copyright>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <VersionSuffix>dev</VersionSuffix>
   </PropertyGroup>
 

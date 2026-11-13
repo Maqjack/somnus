@@ -6,6 +6,8 @@ and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 1.1.0 - 2026-11-13
+
 ### Added
 
 - On a PC without the .NET Desktop Runtime, Setup first shows a page that says what it installs, from
