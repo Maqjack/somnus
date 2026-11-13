@@ -20,6 +20,17 @@ Get the latest version from [Releases](../../releases): the installer
 Every download also comes in Polish (`-pl`). The files are not code-signed, so before you run one,
 compare its SHA256 checksum with `SHA256SUMS.txt` from the same release.
 
+## Code signing
+
+Somnus is applying for free code signing provided by [SignPath.io](https://signpath.io), with a
+certificate by the [SignPath Foundation](https://signpath.org). Until the application is approved,
+the files are not signed.
+
+- Committers and reviewers: [Mac (@Maqjack)](https://github.com/Maqjack)
+- Approvers: [Mac (@Maqjack)](https://github.com/Maqjack)
+- Privacy: this program will not transfer any information to other networked systems unless
+  specifically requested by the user or the person installing or operating it.
+
 ## How to use it
 
 1. Choose **Countdown** (a delay) or **At a time** (a clock time). In **At a time**, tick **Every

@@ -20,6 +20,16 @@ Najnowszą wersję pobierzesz z [wydań](../../releases): instalator
 Każdy plik jest też po angielsku (`-en`). Pliki nie są podpisane certyfikatem, więc przed
 uruchomieniem porównaj ich sumę SHA256 z plikiem `SHA256SUMS.txt` z tego samego wydania.
 
+## Podpisywanie kodu
+
+Somnus ubiega się o bezpłatny podpis kodu od [SignPath.io](https://signpath.io) z certyfikatem
+[SignPath Foundation](https://signpath.org). Do czasu akceptacji wniosku pliki nie są podpisane.
+
+- Autorzy i recenzenci: [Mac (@Maqjack)](https://github.com/Maqjack)
+- Zatwierdzający: [Mac (@Maqjack)](https://github.com/Maqjack)
+- Prywatność: program nie przesyła żadnych informacji do innych systemów w sieci, chyba że wyraźnie
+  zażąda tego użytkownik albo osoba, która go instaluje lub obsługuje.
+
 ## Jak używać
 
 1. Wybierz **Odliczanie** (po czasie) albo **O której** (o godzinie). W trybie **O której** zaznacz
