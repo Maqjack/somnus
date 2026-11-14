@@ -5,7 +5,12 @@
 Somnus usypia, hibernuje lub wyłącza komputer z Windowsem po odliczeniu czasu albo o wskazanej
 godzinie, z 60-sekundowym ostrzeżeniem, w którym można zatrzymać odliczanie.
 
-[English](README.md) · Autor: Mac ([@Maqjack](https://github.com/Maqjack))
+[![Latest release](https://img.shields.io/github/v/release/Maqjack/somnus?label=release&color=7C3AED)](../../releases/latest)
+[![CI](https://github.com/Maqjack/somnus/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7C3AED)](LICENSE)
+![Windows 10 and 11](https://img.shields.io/badge/Windows-10%20%7C%2011-2A1A4A)
+
+[English](README.md) · Autor: Mac ([@Maqjack](https://github.com/Maqjack)) · **[Pobierz najnowszą wersję](../../releases/latest)**
 
 <p>
   <img src="docs/images/main-days-pl.png" alt="Okno główne z codziennym harmonogramem" width="270">
@@ -13,22 +18,22 @@ godzinie, z 60-sekundowym ostrzeżeniem, w którym można zatrzymać odliczanie.
   <img src="docs/images/warning-pl.png" alt="Ostrzeżenie przed akcją" width="270">
 </p>
 
+## Funkcje
+
+- Uśpienie, hibernacja lub wyłączenie po odliczaniu (od 10 sekund do 99 godzin) albo o wybranej godzinie.
+- Powtarzanie o tej godzinie codziennie albo w wybrane dni tygodnia.
+- 60-sekundowe ostrzeżenie przed każdą akcją, z przyciskami **Stop** i **Wykonaj teraz**.
+- Czeka w zasobniku i może uruchamiać się z Windowsem.
+- Opcjonalny dźwięk w ostatnich 20 sekundach: kołysanka, cisza albo Twój plik audio.
+- Polski i angielski; tekst rośnie razem z ustawieniem Windows „Rozmiar tekstu” do 225%.
+- Bez sieci, bez telemetrii, bez uprawnień administratora.
+
 ## Pobieranie
 
 Najnowszą wersję pobierzesz z [wydań](../../releases): instalator
 (`Somnus-Setup-<wersja>-pl.exe`) albo wersję przenośną (`Somnus-<wersja>-win-x64-portable-pl.zip`).
 Każdy plik jest też po angielsku (`-en`). Pliki nie są podpisane certyfikatem, więc przed
 uruchomieniem porównaj ich sumę SHA256 z plikiem `SHA256SUMS.txt` z tego samego wydania.
-
-## Podpisywanie kodu
-
-Somnus ubiega się o bezpłatny podpis kodu od [SignPath.io](https://signpath.io) z certyfikatem
-[SignPath Foundation](https://signpath.org). Do czasu akceptacji wniosku pliki nie są podpisane.
-
-- Autorzy i recenzenci: [Mac (@Maqjack)](https://github.com/Maqjack)
-- Zatwierdzający: [Mac (@Maqjack)](https://github.com/Maqjack)
-- Prywatność: program nie przesyła żadnych informacji do innych systemów w sieci, chyba że wyraźnie
-  zażąda tego użytkownik albo osoba, która go instaluje lub obsługuje.
 
 ## Jak używać
 

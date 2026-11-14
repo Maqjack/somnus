@@ -5,7 +5,12 @@
 Somnus puts a Windows PC to sleep, hibernates it or shuts it down after a countdown or at a chosen
 time, with a 60-second warning in which you can stop it.
 
-[Polski](README.pl.md) · Made by Mac ([@Maqjack](https://github.com/Maqjack))
+[![Latest release](https://img.shields.io/github/v/release/Maqjack/somnus?label=release&color=7C3AED)](../../releases/latest)
+[![CI](https://github.com/Maqjack/somnus/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7C3AED)](LICENSE)
+![Windows 10 and 11](https://img.shields.io/badge/Windows-10%20%7C%2011-2A1A4A)
+
+[Polski](README.pl.md) · Made by Mac ([@Maqjack](https://github.com/Maqjack)) · **[Download the latest version](../../releases/latest)**
 
 <p>
   <img src="docs/images/main-days.png" alt="The main window with a daily schedule" width="270">
@@ -13,23 +18,22 @@ time, with a 60-second warning in which you can stop it.
   <img src="docs/images/warning.png" alt="The warning before the action" width="270">
 </p>
 
+## Features
+
+- Sleep, hibernate or shut down after a countdown (10 seconds to 99 hours) or at a clock time.
+- Repeat at that time every day or on chosen days of the week.
+- A 60-second warning before every action, with **Stop** and **Do it now**.
+- Waits in the system tray and can start with Windows.
+- An optional sound in the last 20 seconds: a lullaby, nothing, or your own audio file.
+- English and Polish; the text follows Windows' Text size up to 225%.
+- No network, no telemetry, no administrator rights.
+
 ## Download
 
 Get the latest version from [Releases](../../releases): the installer
 (`Somnus-Setup-<version>-en.exe`) or the portable zip (`Somnus-<version>-win-x64-portable-en.zip`).
 Every download also comes in Polish (`-pl`). The files are not code-signed, so before you run one,
 compare its SHA256 checksum with `SHA256SUMS.txt` from the same release.
-
-## Code signing
-
-Somnus is applying for free code signing provided by [SignPath.io](https://signpath.io), with a
-certificate by the [SignPath Foundation](https://signpath.org). Until the application is approved,
-the files are not signed.
-
-- Committers and reviewers: [Mac (@Maqjack)](https://github.com/Maqjack)
-- Approvers: [Mac (@Maqjack)](https://github.com/Maqjack)
-- Privacy: this program will not transfer any information to other networked systems unless
-  specifically requested by the user or the person installing or operating it.
 
 ## How to use it
 
